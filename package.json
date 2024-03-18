@@ -9,10 +9,20 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/vector-icons": "^14.0.0",
+    "@react-native-community/datetimepicker": "7.6.1",
+    "@react-navigation/bottom-tabs": "^6.5.19",
+    "@react-navigation/native": "^6.1.16",
+    "@react-navigation/native-stack": "^6.9.25",
     "expo": "~50.0.13",
     "expo-status-bar": "~1.11.1",
+    "install": "^0.13.0",
+    "npx": "^10.2.2",
     "react": "18.2.0",
-    "react-native": "0.73.5"
+    "react-native": "0.73.5",
+    "react-native-modal": "^13.0.1",
+    "react-native-modal-datetime-picker": "^17.1.0",
+    "twrnc": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
