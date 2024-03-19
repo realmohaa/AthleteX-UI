@@ -41,7 +41,7 @@ function Register({ navigation }: { navigation: any }): React.JSX.Element {
       style={tw`flex flex-col items-center justify-center h-full w-full`}
     >
       <View style={tw`absolute top-0 w-full flex items-center bg-[#55bfa9]`}>
-        <Pressable style={tw`flex items-start w-full py-10 px-6`} onPress={() => navigation.navigate('Home')}>
+        <Pressable style={tw`flex items-start w-full py-10 px-6`} onPress={() => navigation.navigate('Login')}>
         <Ionicons name="arrow-back" size={28} color="white" />
         </Pressable>
         <View style={tw`flex flex-row items-center justify-center -mt-12 pb-4`}>

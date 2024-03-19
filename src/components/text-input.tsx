@@ -6,9 +6,6 @@ import {
 } from "react-native";
 import tailwind from "twrnc";
 
-/**
- * React Native text input component built with Tailwind CSS
- */
 export const TextInput = ({
   placeholderTextColor,
   ...props
