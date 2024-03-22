@@ -2,60 +2,38 @@ import React from 'react'
 import { Text, View } from 'react-native'
 import tw from 'twrnc'
 import { Avatar } from 'react-native-elements';
-
+import { Goal } from '../utils/data';
 interface headerProps {
-        username: string
+    selectedGoals: Goal[]
 }
 
-export const GoalsCard = ({ username }: headerProps) => {
+export const GoalsCard = ({selectedGoals}: headerProps) => {
     return (
         <View style={tw`pt-6 pb-4 px-6 flex flex-row gap-4 items-center`}>
-            <Text style={tw`text-sm text-[#3c403d] text-break w-[30%]`}>Goals for your workout</Text> 
-            <View style={tw`flex flex-row gap-2`}>
-                <View>
-                    <Avatar 
-                        containerStyle={{
-                            backgroundColor: "transparent",
-                            borderRadius:100, 
-                            borderStyle:"solid", 
-                            borderWidth:1
-                        }} 
-                        size={60} 
-                        rounded title="" 
-                    />
-                    <Text style={tw`text-[10px] text-[#3c403d] text-center`}>Shooting</Text>
-                </View>
-            </View>
-            <View style={tw`flex flex-row gap-2`}>
-                <View>
-                    <Avatar 
-                        containerStyle={{
-                            backgroundColor: "transparent",
-                            borderRadius:100, 
-                            borderStyle:"solid", 
-                            borderWidth:1
-                        }} 
-                        size={60} 
-                        rounded title="" 
-                    />
-                    <Text style={tw`text-[10px] text-[#3c403d] text-center`}>Finsihing</Text>
-                </View>
-            </View>
-            <View style={tw`flex flex-row gap-2`}>
-                <View>
-                    <Avatar 
-                        containerStyle={{
-                            backgroundColor: "transparent",
-                            borderRadius:100, 
-                            borderStyle:"solid", 
-                            borderWidth:1
-                        }} 
-                        size={60} 
-                        rounded title="" 
-                    />
-                    <Text style={tw`text-[10px] text-[#3c403d] text-center`}>Dribbeling</Text>
-                </View>
-            </View>
+            <Text style={tw`text-sm text-[#3c403d] w-[30%]`}>Goals for your workout</Text>
+            {
+                selectedGoals.map((goal, index) => {
+                    return(
+                        <View style={tw`flex flex-row gap-2`} key={index}>
+                        <View>
+                            <Avatar 
+                                containerStyle={{
+                                    backgroundColor: "transparent",
+                                    borderRadius:100, 
+                                    borderStyle:"solid", 
+                                    borderWidth:1,
+                                    padding: 4
+                                }} 
+                                size={60}
+                                source={goal.img}
+                                rounded title="" 
+                            />
+                            <Text style={tw`text-[10px] text-[#3c403d] text-center`}>{goal.name}</Text>
+                        </View>
+                    </View>
+                    )
+            })
+            }
         </View>
     )
 }

@@ -4,7 +4,7 @@ import {
   Text,
   View,
 } from 'react-native';
-
+import { Button } from '@rneui/themed';
 import tw from 'twrnc';
 import { TextInput } from '../../components/text-input';
 import wlogo from '../../assets/images/logowhite.png';
@@ -71,9 +71,16 @@ function Register({ navigation }: { navigation: any }): React.JSX.Element {
             />
           <TextInput style={tw`rounded-full`} placeholder="Password" />
         </View>
-        <Pressable style={tw`flex justify-center items-center rounded-xl border border-[#55bfa9] px-12 py-2 mt-4`}>
-          <Text style={tw`text-[#55bfa9] font-bold`}>Create Account</Text>
-        </Pressable>
+        <Button 
+          radius={"lg"} 
+          type="outline" 
+          color="#55bfa9" 
+          titleStyle={{color:"#55bfa9", padding:28}} 
+          buttonStyle={{borderColor: "#55bfa9", borderWidth:1}}
+          containerStyle={{marginTop:15}}
+          >
+            Create Account
+        </Button>
       </View>
 
       <Text style={tw`absolute bottom-4`}>Myathletex.com</Text>

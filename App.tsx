@@ -6,6 +6,7 @@ import Register from './src/screens/auth/Register';
 import Home from './src/screens/Home';
 import Tracker from './src/screens/Tracker';
 import Calendar from './src/screens/Calendar';
+import ExcerciseDetail from './src/screens/ExcerciseDetail';
 import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom-tabs';
 import { FontAwesome6, MaterialCommunityIcons, SimpleLineIcons  } from '@expo/vector-icons';
 import { View } from 'react-native';
@@ -20,6 +21,7 @@ const screens = {
   Calendar: 'Calendar',
   Login: 'Login',
   Register: 'Register', 
+  Detail: 'Detail', 
 }
 
 function ProtectedScreens() {
@@ -61,7 +63,8 @@ function ProtectedScreens() {
         name={screens.Tracker} 
         component={Tracker} 
       />
-      <Tab.Screen 
+      <Tab.Screen
+       
        options={{
           tabBarIcon: ({color}) => (
             <SimpleLineIcons cons name="calendar" size={35} color={color} />
@@ -84,6 +87,7 @@ export default function App() {
       >
         <Stack.Screen name={screens.Login} component={Login} />
         <Stack.Screen name={screens.Register} component={Register} />
+        <Stack.Screen name={screens.Detail} component={ExcerciseDetail} />
         <Stack.Screen name={screens.Protected} component={ProtectedScreens} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -9,9 +9,9 @@ interface headerProps {
 
 export const header = ({ username }: headerProps) => {
     return (
-        <View style={tw`pt-12 pb-4 px-6 flex flex-row gap-2 items-center`}>
-                <Avatar containerStyle={{backgroundColor: "#55bfa9"}} size={30} rounded title="UN" />
-                <Text style={tw`text-sm text-[#3c403d]`}>{username}</Text> 
+        <View style={tw`pt-12 pb-4 flex flex-row gap-2 items-center`}>
+            <Avatar containerStyle={{backgroundColor: "#55bfa9"}} size={30} rounded title="UN" />
+            <Text style={tw`text-sm text-[#3c403d]`}>{username}</Text> 
         </View>
     )
 }

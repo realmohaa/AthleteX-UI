@@ -1,17 +1,17 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Pressable,
   Text,
   View,
+  Image
 } from 'react-native';
 import Modal from "react-native-modal";
-import { Image } from 'react-native';
 import tw from 'twrnc';
-
+import { Button } from '@rneui/themed';
+import { TextInput } from '../../components/text-input';
+// Logo Imports
 import logo from '../../assets/images/logo.png';
 import wlogo from '../../assets/images/logowhite.png';
-
-import { TextInput } from '../../components/text-input';
 
 function Login({ navigation }: { navigation: any }): React.JSX.Element {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -19,7 +19,6 @@ function Login({ navigation }: { navigation: any }): React.JSX.Element {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-
   return (
     <View
       style={tw`flex flex-col items-center justify-center h-full w-full px-8`}
@@ -36,20 +35,14 @@ function Login({ navigation }: { navigation: any }): React.JSX.Element {
             <TextInput style={tw`rounded-full`} placeholder="Password" />
           </View>
 
-          <Pressable style={tw`flex justify-center items-center rounded-full bg-white px-12 py-2 mt-4`}>
-            <Text style={tw`text-[#55bfa9] font-bold`}>Login</Text>
-          </Pressable>
+          <Button radius={"xl"} color="white" titleStyle={{padding:28, color:"#55bfa9"}} containerStyle={{marginTop:15}} onPress={toggleModal}>Login</Button>
         </View>
       </Modal>
       <Image source={logo} style={{ width: 250, height: 250 }} />
-      <Pressable style={tw`flex justify-center items-center rounded-full bg-[#55bfa9] px-12 py-2 mt-4`} onPress={toggleModal}>
-          <Text style={tw`text-slate-100 font-bold`}>Login</Text>
-      </Pressable>
-      <Pressable style={tw`flex justify-center items-center rounded-full px-12 py-2`} onPress={() => navigation.navigate('Register')}>
-          <Text style={tw`font-bold text-xs underline`}>Don't Have an account?</Text>
-      </Pressable>
+      <Button radius={"xl"} color="#55bfa9" titleStyle={{padding:28}} onPress={toggleModal}>Login</Button>
+      <Button type="clear" titleStyle={{color:"black", fontSize:12, textDecorationLine:"underline"}} onPress={() => navigation.navigate('Register')}>Don't Have an account?</Button>
       <Pressable style={tw`flex justify-center items-center rounded-full px-12 py-2`} onPress={() => navigation.navigate('Protected')}>
-          <Text style={tw`font-bold text-xs underline`}>HOME TWEAK</Text>
+          <Text style={tw`font-bold text-transparent text-xs underline`}>HOME TWEAK</Text>
       </Pressable>
       <Text style={tw`absolute bottom-4 text-xs`}>Myathletex.com</Text>
     </View>
