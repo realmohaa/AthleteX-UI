@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text } from 'react-native';
 import tw from 'twrnc';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import VideoPlayer from 'expo-video-player'
@@ -8,23 +8,15 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import SetCard from '../components/setCard';
 import MidTextSeparator from '../components/midTextSeparator';
+import { Excercise, testSets } from '../utils/data';
 
 type StackParamList = {
     Detail: { excercise: Excercise };
-  };
+};
 
 type DetailScreenRouteProp = RouteProp<StackParamList, 'Detail'>;
-  
-type Excercise = {
-    name: string;
-    description: string;
-    effortLevel: number;
-    videoLink: string;
-    category: string;
-    duration: number;
-    reps: number;
-    sets: number;
-}
+
+const sortedTestSets = testSets.sort((a, b) => a.effortLevel - b.effortLevel);
 
 function ExcerciseDetail(): React.JSX.Element {
     const route = useRoute<DetailScreenRouteProp>();
@@ -53,17 +45,19 @@ function ExcerciseDetail(): React.JSX.Element {
             </View>
             <View style={tw`py-4 px-8`}>
                 <Text style={tw`text-center uppercase font-bold mb-4`}>Walk Through</Text>
-                <View style={tw`flex flex-row justify-between items-center`}>
-                    <Feather name="arrow-up-right" size={30} color="#55bfa9"/>
-                    <Text style={tw`text-center uppercase font-bold text-2xl`}>3 REPS</Text>
-                    <View style={tw``}>
-                        <Text style={tw`uppercase font-bold text-lg`}>10%</Text>
-                        <Text style={tw`uppercase font-bold text-[10px]`}>Effort Level</Text>
-                    </View>
-                </View>
-                <MidTextSeparator name="Working Sets" />
-                <SetCard index={1} reps={5} effortLevel={60} />
-                <SetCard index={2} reps={5} effortLevel={100} />
+                {
+                    sortedTestSets.map((set, index) => {
+                        if (index === 0) {
+                            return (
+                            <>
+                            <SetCard key={index} index={0} reps={set.reps} effortLevel={set.effortLevel} />
+                            <MidTextSeparator name="Working Sets" />
+                            </>
+                            )
+                        }
+                        return <SetCard key={index} index={index} reps={set.reps} effortLevel={set.effortLevel} />
+                    })
+                }
             </View>
         </View>
     );

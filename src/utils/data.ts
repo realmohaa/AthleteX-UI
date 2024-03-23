@@ -3,7 +3,7 @@ import shoot from '../assets/images/shoot.png';
 import finish from '../assets/images/finish.png';
 
 // TYPES
-type excercise = {
+export type Excercise = {
     name: string;
     description: string;
     effortLevel: number;
@@ -14,7 +14,7 @@ type excercise = {
     sets: number;
 }
 
-type FocusItem = {
+export type FocusItem = {
     name: string;
     items: { label: string; value: string }[];
 };
@@ -41,6 +41,7 @@ export const SelectedGoals : Goal[] = [
 ]
 
 // Mock Data
+export const Equipments = ['Basketball','Cones','Hoop','Jump Rope','Medicine Ball','Resistance Band','Weights']
 
 export const ExerciseCategory : Goal[] = [
   {
@@ -93,60 +94,37 @@ export const focusItems:  FocusItem[] = [
     {
       name: 'Time Selection',
       items: [
-        {label: '60', value: '60'},
-        {label: '30', value: '30'},
-        {label: '15', value: '15'},
-      ]
-    },
-    {
-      name: 'Equipment',
-      items: [
-        {label: 'Gym', value: 'Gym'},
-        {label: 'Home', value: 'Home'},
-        {label: 'Work', value: 'Work'},
+        {label: '60 Mins', value: '60'},
+        {label: '30 Mins', value: '30'},
+        {label: '15 Mins', value: '15'},
       ]
     },
   ]
 
-export const excercisesData: excercise[] = [
-    {
-      name: 'Excercise 1',
-      description: 'description',
-      effortLevel: 0,
-      videoLink: 'videoLink',
-      category: 'category',
-      duration: 0,
-      reps: 0,
-      sets: 0,
-    },
-    {
-      name: 'Excercise 2',
-      description: 'description',
-      effortLevel: 0,
-      videoLink: 'videoLink',
-      category: 'category',
-      duration: 0,
-      reps: 0,
-      sets: 0,
-    },
-    {
-      name: 'Excercise 3',
-      description: 'description',
-      effortLevel: 0,
-      videoLink: 'videoLink',
-      category: 'category',
-      duration: 0,
-      reps: 0,
-      sets: 0,
-    },
-    {
-      name: 'Excercise 4',
-      description: 'description',
-      effortLevel: 0,
-      videoLink: 'videoLink',
-      category: 'category',
-      duration: 0,
-      reps: 0,
-      sets: 0,
-    },
+export const excercisesData: Excercise[] = [
+  {
+    name: 'string',
+    description: 'string',
+    effortLevel: 100,
+    videoLink: 'string',
+    category: 'string',
+    duration: 1,
+    reps: 5,
+    sets: 4
+  }
+]
+
+export const testSets = [
+  {
+      reps: 5,
+      effortLevel: 10
+  },
+  {
+      reps: 5,
+      effortLevel: 60
+  },
+  {
+      reps: 5,
+      effortLevel: 100
+  }
 ]
