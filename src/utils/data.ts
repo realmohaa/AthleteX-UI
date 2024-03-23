@@ -106,7 +106,7 @@ export const excercisesData: Excercise[] = [
     name: 'string',
     description: 'string',
     effortLevel: 100,
-    videoLink: 'string',
+    videoLink: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     category: 'string',
     duration: 1,
     reps: 5,

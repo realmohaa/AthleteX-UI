@@ -3,11 +3,11 @@ import { Text, View } from 'react-native'
 import tw from 'twrnc'
 import { Avatar } from 'react-native-elements';
 import { Goal } from '../utils/data';
-interface headerProps {
+interface cardProps {
     selectedGoals: Goal[]
 }
 
-export const GoalsCard = ({selectedGoals}: headerProps) => {
+export const GoalsCard = ({selectedGoals}: cardProps) => {
     return (
         <View style={tw`pt-6 pb-4 px-6 flex flex-row gap-4 items-center`}>
             <Text style={tw`text-sm text-[#3c403d] w-[30%]`}>Goals for your workout</Text>

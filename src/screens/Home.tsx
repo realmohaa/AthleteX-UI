@@ -6,9 +6,9 @@ import tw from 'twrnc';
 import GoalsCard from '../components/goalsCard';
 import ExcerciseCard from '../components/excerciseCard';
 import altImg from '../assets/cover.png';
-import { ExerciseCategory, excercisesData, focusItems, Excercise } from '../utils/data';
 import { Button } from '@rneui/base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { ExerciseCategory, excercisesData, focusItems, Excercise } from '../utils/data';
 
 function Home({ navigation }: { navigation: any }): React.JSX.Element {
   const [openTime, setOpenTime] = useState(false);
@@ -33,6 +33,52 @@ function Home({ navigation }: { navigation: any }): React.JSX.Element {
       const matchingItem = ExerciseCategory.find(item => item.name === goal);
       return { name: goal, img: matchingItem ? matchingItem.img : null };
     });
+  };
+
+  const renderWorkoutExperience = () => {
+    if (excercisesData.length > 0) {
+      return (
+        <>
+        <View style={tw`flex flex-row justify-center gap-4 py-8`}>
+          <View style={tw`flex flex-row items-center gap-2`}>
+            <MaterialCommunityIcons name="dumbbell" size={18} color="#55bfa9" />
+            <Text style={tw`text-center font-bold opacity-60 text-[14px] `}>{excercisesData.length} Excercises</Text>
+          </View>
+          <View style={tw`flex flex-row items-center gap-2`}>
+            <MaterialCommunityIcons name="clock" size={18} color="#55bfa9" />
+            <Text style={tw`text-center font-bold opacity-60 text-[14px] `}>{valueTime} Minutes</Text>
+          </View>
+        </View>
+        <SafeAreaView>
+          <ScrollView style={tw`h-[60%]`}>
+            {
+              excercisesData.map((excercise: Excercise, index: number) => {
+                return (
+                  <TouchableOpacity 
+                    key={index} 
+                    onPress={() => navigation.navigate('Detail', { excercise })}
+                  >
+                    <ExcerciseCard
+                      name={excercise.name}
+                      count={excercise.duration}
+                      reps={excercise.reps}
+                      img={altImg}
+                    />
+                  </TouchableOpacity>
+                )
+              })
+            }
+          </ScrollView>
+        </SafeAreaView>
+        </>
+      );
+    } else {
+      return (
+        <View style={tw`my-4`}>
+          <Text style={tw`text-center`}>Please select the Time at least to begin your workout experience</Text>
+        </View>
+      );
+    }
   };
 
   return (
@@ -90,51 +136,7 @@ function Home({ navigation }: { navigation: any }): React.JSX.Element {
         </View>
         {selectedGoals.length > 0 ? <GoalsCard selectedGoals={mapGoalsToImages(selectedGoals)} /> : null}
         <View>
-          {
-          excercisesData.length > 0 
-          ? 
-          <View style={tw`flex flex-row justify-center gap-4 py-8`}>
-            <View style={tw`flex flex-row items-center gap-2`}>
-              <MaterialCommunityIcons name="dumbbell" size={18} color="#55bfa9" />
-              <Text style={tw`text-center font-bold opacity-60 text-[14px] `}>{excercisesData.length} Excercises</Text>
-            </View>
-            <View style={tw`flex flex-row items-center gap-2`}>
-              <MaterialCommunityIcons name="clock" size={18} color="#55bfa9" />
-              <Text style={tw`text-center font-bold opacity-60 text-[14px] `}>{valueTime} Minutes</Text>
-            </View>
-          </View>
-          :
-          null
-          }
-          {
-          excercisesData && excercisesData.length > 0 
-          ?
-          <SafeAreaView>
-            <ScrollView style={tw`h-[65%]`}>
-              {
-                excercisesData.map((excercise: Excercise, index: number) => {
-                  return (
-                    <TouchableOpacity 
-                      key={index} 
-                      onPress={() => navigation.navigate('Detail', { excercise })}
-                    >
-                      <ExcerciseCard
-                        name={excercise.name}
-                        count={excercise.duration}
-                        reps={excercise.reps}
-                        img={altImg}
-                      />
-                    </TouchableOpacity>
-                  )
-                })
-              }
-            </ScrollView>
-          </SafeAreaView>
-          :
-          <View style={tw`my-4`}>
-            <Text style={tw`text-center`}>Please select the Time at least to begin your workout experience</Text>
-          </View>
-          }
+          {renderWorkoutExperience()}
         </View>
       </View>
       <View style={tw`absolute bottom-0 flex justify-center items-center w-full py-4`}>
