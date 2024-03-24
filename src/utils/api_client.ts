@@ -53,7 +53,7 @@ public async post(url: string, data?: any, config?: any) {
 public async put(url: string, data?: any, config?: any) {
     try 
     {
-        return await this.axiosInstance.put(url, config);
+        return await this.axiosInstance.put(url, data, config);
     }
     catch (error) {
         // Handle error
@@ -77,7 +77,7 @@ public async delete(url: string, config?: any) {
 public async patch(url: string, data?: any, config?: any) {
     try 
     {
-        return await this.axiosInstance.patch(url, config);
+        return await this.axiosInstance.patch(url, data, config);
     }
     catch (error) {
         // Handle error
