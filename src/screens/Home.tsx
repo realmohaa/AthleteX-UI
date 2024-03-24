@@ -9,8 +9,11 @@ import altImg from '../assets/cover.png';
 import { Button } from '@rneui/base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ExerciseCategory, excercisesData, focusItems, Excercise } from '../utils/data';
+import { getData } from '../utils/util';
 
 function Home({ navigation }: { navigation: any }): React.JSX.Element {
+  const userData = getData('user');
+  console.log(userData)
   const [openTime, setOpenTime] = useState(false);
   const [valueTime, setValueTime] = useState(null);
 

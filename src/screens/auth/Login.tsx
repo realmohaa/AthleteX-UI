@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Pressable,
   Text,
@@ -9,13 +9,13 @@ import Modal from "react-native-modal";
 import tw from 'twrnc';
 import { Button } from '@rneui/themed';
 import { TextInput } from '../../components/text-input';
-import axios from 'axios';
-
+import ApiClient from '../../utils/api_client';
+import { LOGIN_ENDPOINT } from '../../utils/consts';
 // Logo Imports
 import logo from '../../assets/images/logo.png';
 import wlogo from '../../assets/images/logowhite.png';
-import ApiClient from '../../utils/api_client';
-import { LOGIN_ENDPOINT } from '../../utils/consts';
+
+import { storeData, getData } from '../../utils/util';
 
 function Login({ navigation }: { navigation: any }): React.JSX.Element {
   const [username, setUsername] = useState('');
@@ -28,26 +28,35 @@ function Login({ navigation }: { navigation: any }): React.JSX.Element {
     setModalVisible(!isModalVisible);
   };
 
-  // give type to navigation
+  useEffect(() => {
+    const checkUserLoggedIn = async () => {
+      const user = getData('user');
+
+      if (user !== null) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Protected' }],
+        });
+      }
+    };
+    checkUserLoggedIn();
+  }, []);
+
   const handleLogin = async (navigation: any) => {
     try {
-
       setIsLoading(true)
-
       const response = await ApiClient.getInstance().post(LOGIN_ENDPOINT, {
         username,
         password
-      });
-
-      console.log(response.data)
-      navigation.navigate('Protected')
-      
+      })
+      await storeData(response.data.user, 'user')
       setIsLoading(false)
       setModalVisible(false)
-    } catch (error) {
-      setIsLoading(false)
-      console.log(error)
+      navigation.navigate('Protected')
+    } catch (e) {
+      console.log(e)
     }
+    setIsLoading(false)
   };
 
   return (
