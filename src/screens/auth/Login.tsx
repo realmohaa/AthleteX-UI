@@ -14,6 +14,8 @@ import axios from 'axios';
 // Logo Imports
 import logo from '../../assets/images/logo.png';
 import wlogo from '../../assets/images/logowhite.png';
+import ApiClient from '../../utils/api_client';
+import { LOGIN_ENDPOINT } from '../../utils/consts';
 
 function Login({ navigation }: { navigation: any }): React.JSX.Element {
   const [username, setUsername] = useState('');
@@ -26,20 +28,22 @@ function Login({ navigation }: { navigation: any }): React.JSX.Element {
     setModalVisible(!isModalVisible);
   };
 
-  const handleLogin = async () => {
+  // give type to navigation
+  const handleLogin = async (navigation: any) => {
     try {
+
       setIsLoading(true)
-      const response = await axios.post('https://192.168.0.165:3000/api/v1/auth/login', {
+
+      const response = await ApiClient.getInstance().post(LOGIN_ENDPOINT, {
         username,
         password
-      },{
-        headers: { 
-          'Content-Type': 'multipart/form-data',
-          'Accept': 'application/json'
-        }, 
       });
+
       console.log(response.data)
+      navigation.navigate('Protected')
+      
       setIsLoading(false)
+      setModalVisible(false)
     } catch (error) {
       setIsLoading(false)
       console.log(error)
@@ -76,7 +80,7 @@ function Login({ navigation }: { navigation: any }): React.JSX.Element {
             color="white" 
             titleStyle={{padding:28, color:"#55bfa9"}} 
             containerStyle={{marginTop:15}} 
-            onPress={handleLogin}
+            onPress={() => handleLogin(navigation)}
             loading={isloading}
             loadingProps={{
               size: 'small',

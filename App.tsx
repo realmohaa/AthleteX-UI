@@ -89,6 +89,7 @@ export default function App() {
         <Stack.Screen name={screens.Register} component={Register} />
         <Stack.Screen name={screens.Detail} component={ExcerciseDetail} />
         <Stack.Screen name={screens.Protected} component={ProtectedScreens} />
+        <Stack.Screen name={screens.Home} component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );
