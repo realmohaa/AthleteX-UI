@@ -53,7 +53,7 @@ function Login({ navigation }: { navigation: any }): React.JSX.Element {
       style={tw`flex flex-col items-center justify-center h-full w-full px-8`}
     >
       <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
-        <View style={tw` p-12 w-full max-w-sm flex items-center bg-[#55bfa9] rounded-3xl`}>
+        <View style={tw`p-6 w-full max-w-sm flex items-center bg-[#55bfa9] rounded-3xl`}>
           <View style={tw`flex flex-row items-center justify-center mb-4`}>
             <Text style={tw`text-2xl text-[#3c403d]`}>Athlete</Text>
             <Image source={wlogo} style={tw`w-[75px] h-[75px]`} />

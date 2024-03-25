@@ -8,8 +8,8 @@ import Tracker from './src/screens/Tracker';
 import Calendar from './src/screens/Calendar';
 import ExcerciseDetail from './src/screens/ExcerciseDetail';
 import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom-tabs';
-import { FontAwesome6, MaterialCommunityIcons, SimpleLineIcons  } from '@expo/vector-icons';
-import { View } from 'react-native';
+import { MaterialCommunityIcons, SimpleLineIcons  } from '@expo/vector-icons';
+import { Image, View } from 'react-native';
 import { AuthContext } from './src/utils/util';
 import {  MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
 
@@ -59,7 +59,7 @@ function ProtectedScreens() {
       <Tab.Screen 
         options={{
           tabBarIcon: ({color}) => (
-            <FontAwesome6 name="x-twitter" size={35} color={color} />
+            <Image source={require('./src/assets/images/logo.png')} style={{width: 45, height: 50, tintColor: color}} />
           ),
         }}
         name={screens.Tracker} 
