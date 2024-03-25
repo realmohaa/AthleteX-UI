@@ -8,12 +8,11 @@ import Modal from "react-native-modal";
 import tw from 'twrnc';
 import ApiClient from '../../utils/api_client';
 import { LOGIN_ENDPOINT } from '../../utils/consts';
-import { TextInput, Button } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 // Logo Imports
 import logo from '../../assets/images/logo.png';
 import wlogo from '../../assets/images/logowhite.png';
 import { storeData, AuthContext } from '../../utils/util';
-import { FontAwesome } from '@expo/vector-icons';
 import CustomInput from '../../components/customInput';
 
 function Login({ navigation }: { navigation: any }): React.JSX.Element {

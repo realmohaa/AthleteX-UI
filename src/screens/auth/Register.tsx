@@ -14,15 +14,17 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import { Ionicons } from '@expo/vector-icons';
 import CustomInput from '../../components/customInput';
+import ApiClient from '../../utils/api_client';
+import { REGISTER_ENDPOINT } from '../../utils/consts';
 
 function Register({ navigation }: { navigation: any }): React.JSX.Element {
-
+  const [isloading, setIsLoading] = useState(false);
   const [username, setUsername] = useState('');
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
 
   // Calculate the date 18 years before the current date
   const maxDate = new Date();
@@ -42,8 +44,22 @@ function Register({ navigation }: { navigation: any }): React.JSX.Element {
     hideDatePicker();
   };
 
-  const handleSumit = () => {
-    console.log(username, fullName, email, password, date.toDateString())
+  const handleSumit = async () => {
+    try {
+      setIsLoading(true)
+      await ApiClient.getInstance().post(REGISTER_ENDPOINT, {
+        username,
+        fullName,
+        email,
+        DOB: date,
+        password
+      }).then(async (response) => {
+        navigation.navigate('Login')
+      })
+    } catch (e) {
+      console.log(e)
+    }
+    setIsLoading(false)
   };
 
   return (
@@ -66,24 +82,25 @@ function Register({ navigation }: { navigation: any }): React.JSX.Element {
           <CustomInput placeholder="Full Name" name={fullName} setName={setFullName} />
           <CustomInput placeholder="Email" name={email} setName={setEmail} />
           <View style={tw`flex flex-row justify-between items-center w-full`}>
-          <Text style={tw`bg-neutral-100 border border-black/20 rounded-[18px] px-4 py-2 text-neutral-950 text-neutral-400`}>Date of Birth</Text>
-          <Pressable onPress={showDatePicker}>
-            <Text style={tw`font-bold text-lg text-[#55bfa9]`}>{date.toDateString()}</Text>
-          </Pressable>
+            <Text style={tw`bg-neutral-100 border border-black/20 rounded-[18px] px-4 py-2 text-neutral-950 text-neutral-400`}>Date of Birth</Text>
+            <Pressable onPress={showDatePicker}>
+              <Text style={tw`font-bold text-lg text-[#55bfa9]`}>{date}</Text>
+            </Pressable>
           </View>
           <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              maximumDate={maxDate}
-              mode="date"
-              onChange={(selectedDate) => setDate(selectedDate)}
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-            />
+            isVisible={isDatePickerVisible}
+            maximumDate={maxDate}
+            mode="date"
+            onChange={(selectedDate) => setDate(selectedDate.toISOString().split('T')[0])}
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+          />
           <CustomInput placeholder="Password" name={password} setName={setPassword} isSecured/>
         </View>
         <Button 
           onPress={() => handleSumit()}
-          // loading={isloading}
+          disabled={username === '' && email === '' && fullName === '' && password === '' ? true : false}
+          loading={isloading}
           mode='outlined'
           buttonColor='transparent'
           textColor='#55bfa9'
