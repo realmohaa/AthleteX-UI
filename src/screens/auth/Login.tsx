@@ -1,23 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
-  Pressable,
   Text,
   View,
-  Image
+  Image,
 } from 'react-native';
 import Modal from "react-native-modal";
 import tw from 'twrnc';
-import { Button } from '@rneui/themed';
-import { TextInput } from '../../components/text-input';
 import ApiClient from '../../utils/api_client';
 import { LOGIN_ENDPOINT } from '../../utils/consts';
+import { TextInput, Button } from 'react-native-paper';
 // Logo Imports
 import logo from '../../assets/images/logo.png';
 import wlogo from '../../assets/images/logowhite.png';
-
 import { storeData, AuthContext } from '../../utils/util';
-
-import { useContext } from 'react';
+import { FontAwesome } from '@expo/vector-icons';
+import CustomInput from '../../components/customInput';
 
 function Login({ navigation }: { navigation: any }): React.JSX.Element {
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
@@ -63,42 +60,33 @@ function Login({ navigation }: { navigation: any }): React.JSX.Element {
             <Image source={wlogo} style={tw`w-[75px] h-[75px]`} />
           </View>
           <View style={tw`flex flex-col gap-4 w-full`}>
-              <TextInput 
-                style={tw`rounded-full`} 
-                placeholder="Username / Email" 
-                value={username}
-                onChangeText={setUsername}
-              />
-              <TextInput 
-                style={tw`rounded-full`} 
-                placeholder="Password" 
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-              />
+            <CustomInput placeholder="Username / Email" name={username} setName={setUsername} icon='email' />
+            <CustomInput placeholder="Password" name={password} setName={setPassword} isSecured icon='form-textbox-password'/>
           </View>
-          <Button 
-            radius={"xl"} 
-            color="white" 
-            titleStyle={{padding:28, color:"#55bfa9"}} 
-            containerStyle={{marginTop:15}} 
+          <Button
             onPress={() => handleLogin(navigation)}
             loading={isloading}
-            loadingProps={{
-              size: 'small',
-              color: 'rgba(111, 202, 186, 1)',
-            }}
+            mode='contained'
+            buttonColor='white'
+            textColor='#55bfa9'
+            style={tw`mt-4`}
+            disabled={username === '' && password === '' ? true : false}
             >
             Login
           </Button>
         </View>
       </Modal>
       <Image source={logo} style={{ width: 250, height: 250 }} />
-      <Button radius={"xl"} color="#55bfa9" titleStyle={{padding:28}} onPress={toggleModal}>Login</Button>
-      <Button type="clear" titleStyle={{color:"black", fontSize:12, textDecorationLine:"underline"}} onPress={() => navigation.navigate('Register')}>Don't Have an account?</Button>
-      <Pressable style={tw`flex justify-center items-center rounded-full px-12 py-2`} onPress={() => navigation.navigate('Protected')}>
-          <Text style={tw`font-bold text-transparent text-xs underline`}>HOME TWEAK</Text>
-      </Pressable>
+      <Button
+          onPress={() => toggleModal()}
+          loading={isloading}
+          mode='contained'
+          buttonColor='#55bfa9'
+          textColor='white'
+          >
+          Login
+      </Button>
+      <Button mode='text' style={tw`my-2`} textColor='black' onPress={() => navigation.navigate('Register')}>Don't Have an account?</Button>
       <Text style={tw`absolute bottom-4 text-xs`}>Myathletex.com</Text>
     </View>
   );

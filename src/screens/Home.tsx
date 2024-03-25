@@ -26,6 +26,8 @@ function Home({ navigation }: { navigation: any }): React.ReactElement {
 
   const [isTimeSelected, setIsTimeSelected] = useState(false);
 
+  const [workout, setWorkout] = useState<Excercise[]>([]);
+
   const [userDetails, setUserDetails] = useState<{ data: { user: { username: string } } } | undefined>();;
   
   const fetchUser = async () => {
@@ -48,13 +50,13 @@ function Home({ navigation }: { navigation: any }): React.ReactElement {
   };
 
   const renderWorkoutExperience = () => {
-    if (excercisesData.length > 0) {
+    if (workout.length > 0) {
       return (
         <>
         <View style={tw`flex flex-row justify-center gap-4 py-8`}>
           <View style={tw`flex flex-row items-center gap-2`}>
             <MaterialCommunityIcons name="dumbbell" size={18} color="#55bfa9" />
-            <Text style={tw`text-center font-bold opacity-60 text-[14px] `}>{excercisesData.length} Excercises</Text>
+            <Text style={tw`text-center font-bold opacity-60 text-[14px] `}>{workout.length} Excercises</Text>
           </View>
           <View style={tw`flex flex-row items-center gap-2`}>
             <MaterialCommunityIcons name="clock" size={18} color="#55bfa9" />
@@ -64,7 +66,7 @@ function Home({ navigation }: { navigation: any }): React.ReactElement {
         <SafeAreaView>
           <ScrollView style={tw`h-[60%]`}>
             {
-              excercisesData.map((excercise: Excercise, index: number) => {
+              workout.map((excercise: Excercise, index: number) => {
                 return (
                   <TouchableOpacity 
                     key={index} 

@@ -11,6 +11,7 @@ import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom
 import { FontAwesome6, MaterialCommunityIcons, SimpleLineIcons  } from '@expo/vector-icons';
 import { View } from 'react-native';
 import { AuthContext } from './src/utils/util';
+import {  MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -98,12 +99,26 @@ const AuthStack = () => {
 };
 
 export default function App() {
-  const [isSignedIn, setIsSignedIn] = useState(true);;
+  const [isSignedIn, setIsSignedIn] = useState(true);
+
+  const theme = {
+    ...DefaultTheme,
+    // Specify custom property
+    myOwnProperty: true,
+    // Specify custom property in nested object
+    colors: {
+      ...DefaultTheme.colors,
+      myOwnColor: '#FFFFFF',
+    },
+  };
+
   return (
     <AuthContext.Provider value={{ isSignedIn, setIsSignedIn }}>
-      <NavigationContainer>
-        {isSignedIn ? <ProtectedStack /> : <AuthStack />}
-      </NavigationContainer>
+      <PaperProvider theme={theme}>
+        <NavigationContainer>
+          {isSignedIn ? <ProtectedStack /> : <AuthStack />}
+        </NavigationContainer>
+      </PaperProvider>
     </AuthContext.Provider>
   );
 }

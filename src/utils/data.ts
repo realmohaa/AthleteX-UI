@@ -102,16 +102,16 @@ export const focusItems:  FocusItem[] = [
   ]
 
 export const excercisesData: Excercise[] = [
-  {
-    name: 'string',
-    description: 'string',
-    effortLevel: 100,
-    videoLink: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    category: 'string',
-    duration: 1,
-    reps: 5,
-    sets: 4
-  }
+  // {
+  //   name: 'string',
+  //   description: 'string',
+  //   effortLevel: 100,
+  //   videoLink: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+  //   category: 'string',
+  //   duration: 1,
+  //   reps: 5,
+  //   sets: 4
+  // }
 ]
 
 export const testSets = [

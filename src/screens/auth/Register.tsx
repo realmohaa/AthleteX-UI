@@ -4,17 +4,24 @@ import {
   Text,
   View,
 } from 'react-native';
-import { Button } from '@rneui/themed';
+import { Button } from 'react-native-paper';
 import tw from 'twrnc';
-import { TextInput } from '../../components/text-input';
+
 import wlogo from '../../assets/images/logowhite.png';
 
 import { Image } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import { Ionicons } from '@expo/vector-icons';
+import CustomInput from '../../components/customInput';
 
 function Register({ navigation }: { navigation: any }): React.JSX.Element {
+
+  const [username, setUsername] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const [date, setDate] = useState(new Date());
 
   // Calculate the date 18 years before the current date
@@ -34,7 +41,10 @@ function Register({ navigation }: { navigation: any }): React.JSX.Element {
   const handleConfirm = () => {
     hideDatePicker();
   };
-  
+
+  const handleSumit = () => {
+    console.log(username, fullName, email, password, date.toDateString())
+  };
 
   return (
     <View
@@ -52,9 +62,9 @@ function Register({ navigation }: { navigation: any }): React.JSX.Element {
       <View style={tw`w-full flex items-center`}>
         <Text style={tw`uppercase font-bold text-[#55bfa9] text-2xl py-8`}>My Athlete X Account</Text>
         <View style={tw`flex flex-col gap-4 w-3/4`}>
-          <TextInput style={tw`rounded-full`} placeholder="Full Name" />
-          <TextInput style={tw`rounded-full`} placeholder="Username" />
-          <TextInput style={tw`rounded-full`} placeholder="Full Name" />
+          <CustomInput placeholder="Username" name={username} setName={setUsername} />
+          <CustomInput placeholder="Full Name" name={fullName} setName={setFullName} />
+          <CustomInput placeholder="Email" name={email} setName={setEmail} />
           <View style={tw`flex flex-row justify-between items-center w-full`}>
           <Text style={tw`bg-neutral-100 border border-black/20 rounded-[18px] px-4 py-2 text-neutral-950 text-neutral-400`}>Date of Birth</Text>
           <Pressable onPress={showDatePicker}>
@@ -69,15 +79,15 @@ function Register({ navigation }: { navigation: any }): React.JSX.Element {
               onConfirm={handleConfirm}
               onCancel={hideDatePicker}
             />
-          <TextInput style={tw`rounded-full`} placeholder="Password" />
+          <CustomInput placeholder="Password" name={password} setName={setPassword} isSecured/>
         </View>
         <Button 
-          radius={"lg"} 
-          type="outline" 
-          color="#55bfa9" 
-          titleStyle={{color:"#55bfa9", padding:28}} 
-          buttonStyle={{borderColor: "#55bfa9", borderWidth:1}}
-          containerStyle={{marginTop:15}}
+          onPress={() => handleSumit()}
+          // loading={isloading}
+          mode='outlined'
+          buttonColor='transparent'
+          textColor='#55bfa9'
+          style={tw`border-[#55bfa9] mt-4`}
           >
             Create Account
         </Button>
