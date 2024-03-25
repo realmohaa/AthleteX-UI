@@ -99,7 +99,7 @@ const AuthStack = () => {
 };
 
 export default function App() {
-  const [isSignedIn, setIsSignedIn] = useState(true);
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
   const theme = {
     ...DefaultTheme,
