@@ -3,26 +3,28 @@ import { Text, View } from 'react-native'
 import tw from 'twrnc'
 import { Avatar } from 'react-native-elements';
 import { Button } from '@rneui/base';
-import { getData, removeValue } from '../utils/util';
+import { AuthContext, removeValue } from '../utils/util';
 import { useNavigation } from '@react-navigation/native';
+import { useContext } from 'react';
 
 interface headerProps {
     username: string
 }
 
 export const header = ({ username }: headerProps) => {
+    const { setIsSignedIn } = useContext(AuthContext);
+
     const navigation = useNavigation();
-    const logout = () => {
-            removeValue('user');
-            const user = getData('user');
-            console.log(user)
-            if (!user) {
-                navigation.reset({
-                    index: 1,
-                    routes: [{ name: 'Login' as never }, { name: 'Register' as never }],
-                });
-            }
-    }
+
+    const logout = async () => {
+        // Clear user data from storage
+        await removeValue('user');
+        // Update isSignedIn state
+        setIsSignedIn(false);
+        // Navigate to login screen
+        navigation.navigate('Login' as never)
+      };
+
     return (
         <View style={tw`pt-12 pb-4 flex flex-row gap-2 items-center justify-between`}>
             <View style={tw`flex flex-row gap-2 items-center`}>

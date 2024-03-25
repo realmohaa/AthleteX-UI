@@ -11,9 +11,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ExerciseCategory, excercisesData, focusItems, Excercise } from '../utils/data';
 import { getData } from '../utils/util';
 
-function Home({ navigation }: { navigation: any }): React.JSX.Element {
-  const userData = getData('user');
-  console.log(userData)
+function Home({ navigation }: { navigation: any }): React.ReactElement {
+
   const [openTime, setOpenTime] = useState(false);
   const [valueTime, setValueTime] = useState(null);
 
@@ -27,7 +26,17 @@ function Home({ navigation }: { navigation: any }): React.JSX.Element {
 
   const [isTimeSelected, setIsTimeSelected] = useState(false);
 
+  const [userDetails, setUserDetails] = useState<{ data: { user: { username: string } } } | undefined>();;
+  
+  const fetchUser = async () => {
+    const user = await getData('user');
+    setUserDetails(user);
+    console.log(userDetails)
+    return userDetails;
+  }
+
   useEffect(() => {
+    fetchUser()
     setIsTimeSelected(valueTime !== null);
   }, [valueTime]);
 
@@ -87,7 +96,7 @@ function Home({ navigation }: { navigation: any }): React.JSX.Element {
   return (
     <View style={tw`h-full`}>
       <View style={tw`px-6`}>
-        <Header username={'username'}/>
+        <Header username={userDetails ? userDetails.data.user.username : 'username'}/>
         <View style={tw`flex flex-row justify-between w-full gap-2 z-10`}>
           <DropDownPicker
             showArrowIcon={false}

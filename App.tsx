@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './src/screens/auth/Login';
@@ -10,6 +10,7 @@ import ExcerciseDetail from './src/screens/ExcerciseDetail';
 import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom-tabs';
 import { FontAwesome6, MaterialCommunityIcons, SimpleLineIcons  } from '@expo/vector-icons';
 import { View } from 'react-native';
+import { AuthContext } from './src/utils/util';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -78,19 +79,31 @@ function ProtectedScreens() {
   );
 }
 
-export default function App() {
+const ProtectedStack = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator 
-        initialRouteName={screens.Login}
-        screenOptions={{headerShown: false}}
-      >
-        <Stack.Screen name={screens.Login} component={Login} />
-        <Stack.Screen name={screens.Register} component={Register} />
-        <Stack.Screen name={screens.Detail} component={ExcerciseDetail} />
-        <Stack.Screen name={screens.Protected} component={ProtectedScreens} />
-        <Stack.Screen name={screens.Home} component={Home} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator initialRouteName={screens.Protected} screenOptions={{headerShown: false}}>
+      <Stack.Screen name={screens.Protected} component={ProtectedScreens} />
+      <Stack.Screen name={screens.Detail} component={ExcerciseDetail} />
+    </Stack.Navigator>
+  );
+};
+
+const AuthStack = () => {
+  return (
+    <Stack.Navigator initialRouteName={screens.Login} screenOptions={{headerShown: false}}>
+      <Stack.Screen name={screens.Login} component={Login} />
+      <Stack.Screen name={screens.Register} component={Register} />
+    </Stack.Navigator>
+  );
+};
+
+export default function App() {
+  const [isSignedIn, setIsSignedIn] = useState(true);;
+  return (
+    <AuthContext.Provider value={{ isSignedIn, setIsSignedIn }}>
+      <NavigationContainer>
+        {isSignedIn ? <ProtectedStack /> : <AuthStack />}
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 }

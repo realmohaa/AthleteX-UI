@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Pressable,
   Text,
@@ -15,44 +15,37 @@ import { LOGIN_ENDPOINT } from '../../utils/consts';
 import logo from '../../assets/images/logo.png';
 import wlogo from '../../assets/images/logowhite.png';
 
-import { storeData, getData } from '../../utils/util';
+import { storeData, AuthContext } from '../../utils/util';
+
+import { useContext } from 'react';
 
 function Login({ navigation }: { navigation: any }): React.JSX.Element {
+  const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isloading, setIsLoading] = useState(false);
-
   const [isModalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
-  useEffect(() => {
-    const checkUserLoggedIn = async () => {
-      const user = getData('user');
-
-      if (user !== null) {
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'Protected' }],
-        });
-      }
-    };
-    checkUserLoggedIn();
-  }, []);
-
   const handleLogin = async (navigation: any) => {
     try {
       setIsLoading(true)
-      const response = await ApiClient.getInstance().post(LOGIN_ENDPOINT, {
+      await ApiClient.getInstance().post(LOGIN_ENDPOINT, {
         username,
         password
+      }).then(async (response) => {
+        await storeData(response.data, 'user')
+        setModalVisible(false)
+        setIsSignedIn(true)
+        if (isSignedIn) {
+          navigation.reset({
+            routes: [{ name: 'Protected' as never }],
+          });
+        }
       })
-      await storeData(response.data.user, 'user')
-      setIsLoading(false)
-      setModalVisible(false)
-      navigation.navigate('Protected')
     } catch (e) {
       console.log(e)
     }
