@@ -13,23 +13,23 @@ interface cardProps {
 
 export const ExcerciseCard = ({ name, duration, reps, img }: cardProps) => {
     return (
-        <View style={tw`flex flex-row border-[1px] rounded-2xl mb-2`}>
-            <Image source={img} style={tw`w-30 h-30 rounded-l-2xl`} />
-            <View style={tw`flex flex-col p-4`}>
+        <View style={tw`flex flex-row border-[1.7px] border-black/30 rounded-2xl mb-2`}>
+            <Image source={img} style={tw`w-30 h-30 rounded-l-xl`} />
+            <View style={tw`flex flex-col px-4 py-2`}>
                 <Text style={tw`font-bold`}>{name}</Text>
-                <View style={tw`flex flex-row gap-4 py-4`}>
+                <View style={tw`flex flex-row gap-4 py-1`}>
                     <View style={tw`flex flex-row items-center gap-2`}>
                         <MaterialCommunityIcons name="clock" size={14} color="#55bfa9" />
                         <View style={tw`flex flex-row items-end gap-1`}>
                             <Text style={tw`font-bold text-xl`}>{duration}</Text>
-                            <Text style={tw`font-bold text-xs`}>Mins</Text>
+                            <Text style={tw`font-bold text-[10px]`}>Mins</Text>
                         </View>
                     </View>
                     <View style={tw`flex flex-row items-center gap-2`}>
                         <FontAwesome6 name="repeat" size={14} color="#55bfa9" />
                         <View style={tw`flex flex-row items-end gap-1`}>
                             <Text style={tw`font-bold text-xl`}>{reps}</Text>
-                            <Text style={tw`font-bold text-xs`}>Reps</Text>
+                            <Text style={tw`font-bold text-[10px]`}>Reps</Text>
                         </View>
                     </View>
                 </View>
