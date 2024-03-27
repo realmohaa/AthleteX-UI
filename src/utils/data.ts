@@ -1,18 +1,28 @@
 import dribble from '../assets/images/dribble.png';
 import shoot from '../assets/images/shoot.png';
 import finish from '../assets/images/finish.png';
+import { StyleSheet } from 'react-native';
 
 // TYPES
-export type Excercise = {
-    name: string;
-    description: string;
-    effortLevel: number;
-    videoLink: string;
-    category: string;
-    duration: number;
-    reps: number;
-    sets: number;
-}
+export type Exercise = {
+  _id: string;
+  totalSets: number;
+  videoLink: string;
+  totalReps: number;
+  name: string;
+  description: string;
+  effortLevel: number;
+  duration: number;
+  skillLevel: string;
+  categories: string[];
+  positionFocus: string;
+  equipmentNeeded: string[];
+  courtArea: string;
+  sets: Set[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
 
 export type FocusItem = {
     name: string;
@@ -101,7 +111,7 @@ export const focusItems:  FocusItem[] = [
     },
   ]
 
-export const excercisesData: Excercise[] = [
+export const excercisesData: Exercise[] = [
   // {
   //   name: 'string',
   //   description: 'string',
@@ -113,6 +123,31 @@ export const excercisesData: Excercise[] = [
   //   sets: 4
   // }
 ]
+
+export type Set = {
+  reps: string;
+  effortLevel: number;
+  _id: string;
+};
+
+export type WorkoutData = {
+  duration: number;
+  user: string;
+  categories: string[];
+  exercises: Exercise[];
+  positionFocus: string[];
+  equipmentNeeded: string[];
+  skillLevel: string;
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
+export type WorkoutResponse = {
+  status: string;
+  data: WorkoutData;
+};
 
 export const testSets = [
   {
@@ -128,3 +163,28 @@ export const testSets = [
       effortLevel: 100
   }
 ]
+
+export const platformStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  inner: {
+    padding: 24,
+    flex: 1,
+    justifyContent: 'space-around',
+  },
+  header: {
+    fontSize: 36,
+    marginBottom: 48,
+  },
+  textInput: {
+    height: 40,
+    borderColor: '#000000',
+    borderBottomWidth: 1,
+    marginBottom: 36,
+  },
+  btnContainer: {
+    backgroundColor: 'white',
+    marginTop: 12,
+  },
+});

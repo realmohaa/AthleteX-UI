@@ -18,7 +18,7 @@ export const ExcerciseCard = ({ name, count, reps, img }: cardProps) => {
                 <Text style={tw`font-bold`}>{name}</Text>
                 <View style={tw`flex flex-row gap-4 py-4`}>
                     <Text style={tw`font-bold text-xl`}>{count}</Text>
-                    <Text style={tw`font-bold text-xl`}>{reps}</Text>
+                    <Text style={tw`font-bold text-xl`}>{reps} Reps</Text>
                 </View>
             </View>
         </View>

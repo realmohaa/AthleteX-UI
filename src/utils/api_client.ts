@@ -10,6 +10,7 @@ class ApiClient {
     timeout: API_TIMEOUT, // 10 seconds
   });
 
+  
   private constructor() {
     // Private constructor to prevent instantiation
   }

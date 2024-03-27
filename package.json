@@ -24,6 +24,7 @@
     "expo-linear-gradient": "^12.7.2",
     "expo-status-bar": "~1.11.1",
     "expo-video-player": "^2.2.0",
+    "formik": "^2.4.5",
     "install": "^0.13.0",
     "npx": "^10.2.2",
     "react": "18.2.0",

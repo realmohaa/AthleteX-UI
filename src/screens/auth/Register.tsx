@@ -3,6 +3,8 @@ import {
   Pressable,
   Text,
   View,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import tw from 'twrnc';
@@ -16,6 +18,8 @@ import { Ionicons } from '@expo/vector-icons';
 import CustomInput from '../../components/customInput';
 import ApiClient from '../../utils/api_client';
 import { REGISTER_ENDPOINT } from '../../utils/consts';
+import { Formik, FormikHelpers, FormikValues } from 'formik';
+import { platformStyles } from '../../utils/data';
 
 function Register({ navigation }: { navigation: any }): React.JSX.Element {
   const [isloading, setIsLoading] = useState(false);
@@ -63,6 +67,11 @@ function Register({ navigation }: { navigation: any }): React.JSX.Element {
   };
 
   return (
+    <>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={platformStyles.container}
+    >
     <View
       style={tw`flex flex-col items-center justify-center h-full w-full`}
     >
@@ -77,6 +86,10 @@ function Register({ navigation }: { navigation: any }): React.JSX.Element {
       </View>
       <View style={tw`w-full flex items-center`}>
         <Text style={tw`uppercase font-bold text-[#55bfa9] text-2xl py-8`}>My Athlete X Account</Text>
+        <Formik 
+            initialValues={[username, fullName, email, password]} 
+            onSubmit={handleSumit}
+        >
         <View style={tw`flex flex-col gap-4 w-3/4`}>
           <CustomInput placeholder="Username" name={username} setName={setUsername} />
           <CustomInput placeholder="Full Name" name={fullName} setName={setFullName} />
@@ -96,10 +109,8 @@ function Register({ navigation }: { navigation: any }): React.JSX.Element {
             onCancel={hideDatePicker}
           />
           <CustomInput placeholder="Password" name={password} setName={setPassword} isSecured/>
-        </View>
         <Button 
-          onPress={() => handleSumit()}
-          disabled={username === '' && email === '' && fullName === '' && password === '' ? true : false}
+          disabled={username === '' || email === '' || fullName === '' || password === '' ? true : false}
           loading={isloading}
           mode='outlined'
           buttonColor='transparent'
@@ -108,10 +119,13 @@ function Register({ navigation }: { navigation: any }): React.JSX.Element {
           >
             Create Account
         </Button>
+        </View>
+        </Formik>
       </View>
-
-      <Text style={tw`absolute bottom-4`}>Myathletex.com</Text>
     </View>
+    </KeyboardAvoidingView>
+    <Text style={tw`absolute bottom-4 text-center w-full`}>Myathletex.com</Text>
+    </>
   );
 }
 

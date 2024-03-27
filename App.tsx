@@ -11,7 +11,7 @@ import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom
 import { MaterialCommunityIcons, SimpleLineIcons  } from '@expo/vector-icons';
 import { Image, View } from 'react-native';
 import { AuthContext } from './src/utils/util';
-import {  MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
+import {  MD3LightTheme as DefaultTheme, PaperProvider, HelperText } from 'react-native-paper';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

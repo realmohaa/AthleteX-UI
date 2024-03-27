@@ -3,6 +3,8 @@ import {
   Text,
   View,
   Image,
+  KeyboardAvoidingView,
+  StyleSheet,
 } from 'react-native';
 import Modal from "react-native-modal";
 import tw from 'twrnc';
@@ -14,6 +16,7 @@ import logo from '../../assets/images/logo.png';
 import wlogo from '../../assets/images/logowhite.png';
 import { storeData, AuthContext } from '../../utils/util';
 import CustomInput from '../../components/customInput';
+import { platformStyles } from '../../utils/data';
 
 function Login({ navigation }: { navigation: any }): React.JSX.Element {
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
@@ -47,34 +50,34 @@ function Login({ navigation }: { navigation: any }): React.JSX.Element {
     }
     setIsLoading(false)
   };
-
+  
   return (
     <View
       style={tw`flex flex-col items-center justify-center h-full w-full px-8`}
     >
-      <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
-        <View style={tw`p-6 w-full max-w-sm flex items-center bg-[#55bfa9] rounded-3xl`}>
-          <View style={tw`flex flex-row items-center justify-center mb-4`}>
-            <Text style={tw`text-2xl text-[#3c403d]`}>Athlete</Text>
-            <Image source={wlogo} style={tw`w-[75px] h-[75px]`} />
+        <Modal avoidKeyboard isVisible={isModalVisible} onBackdropPress={toggleModal}>
+          <View style={tw`p-6 w-full max-w-sm flex items-center bg-[#55bfa9] rounded-3xl`}>
+            <View style={tw`flex flex-row items-center justify-center mb-4`}>
+              <Text style={tw`text-2xl text-[#3c403d]`}>Athlete</Text>
+              <Image source={wlogo} style={tw`w-[75px] h-[75px]`} />
+            </View>
+            <View style={tw`flex flex-col gap-4 w-full`}>
+              <CustomInput placeholder="Username / Email" name={username} setName={setUsername} icon='email' />
+              <CustomInput placeholder="Password" name={password} setName={setPassword} isSecured icon='form-textbox-password'/>
+            </View>
+            <Button
+              onPress={() => handleLogin(navigation)}
+              loading={isloading}
+              mode='contained'
+              buttonColor='white'
+              textColor='#55bfa9'
+              style={tw`mt-4`}
+              disabled={username === '' && password === '' ? true : false}
+              >
+              Login
+            </Button>
           </View>
-          <View style={tw`flex flex-col gap-4 w-full`}>
-            <CustomInput placeholder="Username / Email" name={username} setName={setUsername} icon='email' />
-            <CustomInput placeholder="Password" name={password} setName={setPassword} isSecured icon='form-textbox-password'/>
-          </View>
-          <Button
-            onPress={() => handleLogin(navigation)}
-            loading={isloading}
-            mode='contained'
-            buttonColor='white'
-            textColor='#55bfa9'
-            style={tw`mt-4`}
-            disabled={username === '' && password === '' ? true : false}
-            >
-            Login
-          </Button>
-        </View>
-      </Modal>
+        </Modal>
       <Image source={logo} style={{ width: 250, height: 250 }} />
       <Button
           onPress={() => toggleModal()}
@@ -85,6 +88,7 @@ function Login({ navigation }: { navigation: any }): React.JSX.Element {
           >
           Login
       </Button>
+
       <Button mode='text' style={tw`my-2`} textColor='black' onPress={() => navigation.navigate('Register')}>Don't Have an account?</Button>
       <Text style={tw`absolute bottom-4 text-xs`}>Myathletex.com</Text>
     </View>

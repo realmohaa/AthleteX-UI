@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import tw from 'twrnc'
-import { TextInput } from 'react-native-paper';
+import { TextInput, HelperText } from 'react-native-paper';
 
 interface cardProps {
     placeholder: string,
@@ -13,18 +13,18 @@ interface cardProps {
 export const CustomInput = ({ placeholder, name, isSecured = false, icon, setName }: cardProps) => {
     return (
       <TextInput
-      style={tw`bg-transparent h-11`}
-      placeholderTextColor={"#55bfa9"}
-      contentStyle={icon ? tw`bg-white rounded-r-full border-b-none` : tw`bg-white rounded-full border-b-none`}
-      left={icon ? <TextInput.Icon icon={icon} color="#55bfa9" style={tw`bg-white rounded-r-none rounded-l-full h-11 pl-4`} /> : null}
-      underlineColor="transparent"
-      activeUnderlineColor="transparent"
-      selectionColor='#55bfa9'
-      placeholder={placeholder}
-      value={name}
-      onChangeText={setName}
-      secureTextEntry={isSecured ? true : false} 
-    />
+        style={tw`bg-transparent h-11`}
+        placeholderTextColor={"#55bfa9"}
+        contentStyle={icon ? tw`bg-white rounded-r-full` : tw`bg-white rounded-full`}
+        left={icon ? <TextInput.Icon icon={icon} color="#55bfa9" style={tw`bg-white rounded-r-none rounded-l-full h-11 pl-4`} /> : null}
+        underlineColor="transparent"
+        activeUnderlineColor="transparent"
+        selectionColor='#55bfa9'
+        placeholder={placeholder}
+        value={name}
+        onChangeText={setName}
+        secureTextEntry={isSecured ? true : false} 
+      />
     )
 }
 

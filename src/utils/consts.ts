@@ -13,3 +13,4 @@ const API_FULL = `${API_URL}/api/${API_VERSION}`;
 
 export const LOGIN_ENDPOINT = `${API_FULL}/auth/login`;
 export const REGISTER_ENDPOINT = `${API_FULL}/auth/register`;
+export const WORKOUT_ENDPOINT = `${API_FULL}/workout/generate?expand=1`;

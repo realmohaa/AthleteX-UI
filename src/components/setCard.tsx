@@ -4,7 +4,7 @@ import tw from 'twrnc'
 import { Feather } from '@expo/vector-icons';
 interface cardProps {
     index: number,
-    reps: number,
+    reps: string,
     effortLevel: number
 }
 
