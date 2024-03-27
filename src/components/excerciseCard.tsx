@@ -14,7 +14,7 @@ interface cardProps {
 export const ExcerciseCard = ({ name, duration, reps, img }: cardProps) => {
     return (
         <View style={tw`flex flex-row border-[1px] rounded-2xl mb-2`}>
-            <Image source={img} style={tw`w-30 h-30 rounded-2xl `} />
+            <Image source={img} style={tw`w-30 h-30 rounded-l-2xl`} />
             <View style={tw`flex flex-col p-4`}>
                 <Text style={tw`font-bold`}>{name}</Text>
                 <View style={tw`flex flex-row gap-4 py-4`}>
