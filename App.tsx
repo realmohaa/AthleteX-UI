@@ -11,7 +11,34 @@ import { createBottomTabNavigator, BottomTabBar } from '@react-navigation/bottom
 import { MaterialCommunityIcons, SimpleLineIcons  } from '@expo/vector-icons';
 import { Image, View } from 'react-native';
 import { AuthContext } from './src/utils/util';
-import {  MD3LightTheme as DefaultTheme, PaperProvider, HelperText } from 'react-native-paper';
+import {  MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
+import Toast, { BaseToast, BaseToastProps, ErrorToast } from 'react-native-toast-message';
+
+const toastConfig = {
+  success: (props: React.JSX.IntrinsicAttributes & BaseToastProps) => (
+    <BaseToast
+      {...props}
+      style={{ borderLeftColor: '#55bfa9' }}
+      contentContainerStyle={{ paddingHorizontal: 15 }}
+      text1Style={{
+        fontSize: 15,
+        fontWeight: '400',
+      }}
+    />
+  ),
+  error: (props: React.JSX.IntrinsicAttributes & BaseToastProps) => (
+    <ErrorToast
+      {...props}
+      style={{borderLeftColor: 'red',zIndex: 1000}}
+      text1Style={{
+        fontSize: 17
+      }}
+      text2Style={{
+        fontSize: 15
+      }}
+    />
+  )
+};
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -103,9 +130,7 @@ export default function App() {
 
   const theme = {
     ...DefaultTheme,
-    // Specify custom property
     myOwnProperty: true,
-    // Specify custom property in nested object
     colors: {
       ...DefaultTheme.colors,
       myOwnColor: '#FFFFFF',
@@ -117,6 +142,7 @@ export default function App() {
       <PaperProvider theme={theme}>
         <NavigationContainer>
           {isSignedIn ? <ProtectedStack /> : <AuthStack />}
+          <Toast config={toastConfig} />
         </NavigationContainer>
       </PaperProvider>
     </AuthContext.Provider>

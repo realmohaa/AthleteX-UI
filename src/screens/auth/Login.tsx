@@ -7,13 +7,14 @@ import {
 import Modal from "react-native-modal";
 import tw from 'twrnc';
 import ApiClient from '../../utils/api_client';
-import { LOGIN_ENDPOINT } from '../../utils/consts';
+import { EXISTING_WORKOUT, LOGIN_ENDPOINT } from '../../utils/consts';
 import { Button } from 'react-native-paper';
 // Logo Imports
 import logo from '../../assets/images/logo.png';
 import wlogo from '../../assets/images/logowhite.png';
 import { storeData, AuthContext } from '../../utils/util';
 import CustomInput from '../../components/customInput';
+import Toast from 'react-native-toast-message';
 
 function Login({ navigation }: { navigation: any }): React.JSX.Element {
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
@@ -27,13 +28,21 @@ function Login({ navigation }: { navigation: any }): React.JSX.Element {
   };
 
   const handleLogin = async (navigation: any) => {
-    try {
       setIsLoading(true)
       await ApiClient.getInstance().post(LOGIN_ENDPOINT, {
         username,
         password
       }).then(async (response) => {
         await storeData(response.data, 'user')
+        await ApiClient.getInstance().get(EXISTING_WORKOUT, {
+          headers: {
+            'Authorization': `Bearer ${response.data.data.user.tokens.accessToken}`
+          }
+        }).then(async (response) => {
+          await storeData(response.data.data, 'user-workout')
+        }).catch((e) => {
+          Toast.show({type: 'error', text1: 'No Existing Workout Found'})
+        })
         setModalVisible(false)
         setIsSignedIn(true)
         if (isSignedIn) {
@@ -41,11 +50,10 @@ function Login({ navigation }: { navigation: any }): React.JSX.Element {
             routes: [{ name: 'Protected' as never }],
           });
         }
+      }).catch((e) => {
+        Toast.show({type: 'error', text1: 'The username or password is incorrect', text2: 'Please try again with the correct credentials'})
       })
-    } catch (e) {
-      console.log(e)
-    }
-    setIsLoading(false)
+      setIsLoading(false)
   };
   
   return (
@@ -59,7 +67,7 @@ function Login({ navigation }: { navigation: any }): React.JSX.Element {
               <Image source={wlogo} style={tw`w-[75px] h-[75px]`} />
             </View>
             <View style={tw`flex flex-col gap-4 w-full`}>
-              <CustomInput placeholder="Username / Email" name={username} setName={setUsername} icon='email' />
+              <CustomInput placeholder="Username / Email" name={username} setName={setUsername} icon='account' />
               <CustomInput placeholder="Password" name={password} setName={setPassword} isSecured icon='form-textbox-password'/>
             </View>
             <Button
@@ -74,6 +82,7 @@ function Login({ navigation }: { navigation: any }): React.JSX.Element {
               Login
             </Button>
           </View>
+          <Toast />
         </Modal>
       <Image source={logo} style={{ width: 250, height: 250 }} />
       <Button

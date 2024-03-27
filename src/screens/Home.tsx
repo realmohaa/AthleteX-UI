@@ -12,6 +12,7 @@ import { getData, storeData } from '../utils/util';
 import ApiClient from '../utils/api_client';
 import { WORKOUT_ENDPOINT } from '../utils/consts';
 import { Button } from 'react-native-paper';
+import Toast from 'react-native-toast-message';
 
 function Home({ navigation }: { navigation: any }): React.ReactElement {
 
@@ -46,13 +47,13 @@ function Home({ navigation }: { navigation: any }): React.ReactElement {
       setIsWorkoutLoading(true)
       await ApiClient.getInstance().post(WORKOUT_ENDPOINT, {
         timeAllocated: valueTime,
-        exerciseCategories: valueGoal,
-        equipmentNeeded: valueEquipment
+        exerciseCategories: valueGoal
       }, {
         headers: {
           'Authorization': `Bearer ${userDetails?.data.user.tokens.accessToken}`
         }
       }).then(async (response) => {
+        Toast.show({type: 'success', text1: 'Workout Generated Successfully'})
         setWorkout(response.data.data);
         await storeData(response.data.data, 'user-workout')
         setValueGoal([])
