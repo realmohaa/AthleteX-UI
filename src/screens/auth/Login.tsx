@@ -3,8 +3,6 @@ import {
   Text,
   View,
   Image,
-  KeyboardAvoidingView,
-  StyleSheet,
 } from 'react-native';
 import Modal from "react-native-modal";
 import tw from 'twrnc';
@@ -16,7 +14,6 @@ import logo from '../../assets/images/logo.png';
 import wlogo from '../../assets/images/logowhite.png';
 import { storeData, AuthContext } from '../../utils/util';
 import CustomInput from '../../components/customInput';
-import { platformStyles } from '../../utils/data';
 
 function Login({ navigation }: { navigation: any }): React.JSX.Element {
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);

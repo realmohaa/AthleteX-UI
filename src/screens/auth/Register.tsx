@@ -18,7 +18,7 @@ import { Ionicons } from '@expo/vector-icons';
 import CustomInput from '../../components/customInput';
 import ApiClient from '../../utils/api_client';
 import { REGISTER_ENDPOINT } from '../../utils/consts';
-import { Formik, FormikHelpers, FormikValues } from 'formik';
+import { Formik } from 'formik';
 import { platformStyles } from '../../utils/data';
 
 function Register({ navigation }: { navigation: any }): React.JSX.Element {
@@ -116,6 +116,7 @@ function Register({ navigation }: { navigation: any }): React.JSX.Element {
           buttonColor='transparent'
           textColor='#55bfa9'
           style={tw`border-[#55bfa9] mt-4`}
+          onPress={handleSumit}
           >
             Create Account
         </Button>

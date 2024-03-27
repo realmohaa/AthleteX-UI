@@ -6,12 +6,12 @@ import tw from 'twrnc';
 import GoalsCard from '../components/goalsCard';
 import ExcerciseCard from '../components/excerciseCard';
 import altImg from '../assets/cover.png';
-import { Button } from '@rneui/base';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { ExerciseCategory, excercisesData, focusItems, Exercise, WorkoutData } from '../utils/data';
+import { ExerciseCategory, focusItems, Exercise, WorkoutData } from '../utils/data';
 import { getData, storeData } from '../utils/util';
 import ApiClient from '../utils/api_client';
 import { WORKOUT_ENDPOINT } from '../utils/consts';
+import { Button } from 'react-native-paper';
 
 function Home({ navigation }: { navigation: any }): React.ReactElement {
 
@@ -23,8 +23,6 @@ function Home({ navigation }: { navigation: any }): React.ReactElement {
 
   const [openEquipment, setOpenEquipment] = useState(false);
   const [valueEquipment, setValueEquipment] = useState<string[]>([]);
-
-  const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
 
   const [isTimeSelected, setIsTimeSelected] = useState(false);
 
@@ -45,11 +43,11 @@ function Home({ navigation }: { navigation: any }): React.ReactElement {
   
   const handleWorkout = async () => {
     try {
-      console.log(userDetails?.data.user.tokens.accessToken)
       setIsWorkoutLoading(true)
       await ApiClient.getInstance().post(WORKOUT_ENDPOINT, {
         timeAllocated: valueTime,
-        exerciseCategories: valueGoal
+        exerciseCategories: valueGoal,
+        equipmentNeeded: valueEquipment
       }, {
         headers: {
           'Authorization': `Bearer ${userDetails?.data.user.tokens.accessToken}`
@@ -92,7 +90,6 @@ function Home({ navigation }: { navigation: any }): React.ReactElement {
   };
 
   const renderWorkoutExperience = () => {
-    console.log(workout?.exercises);
     if (workout?.exercises?.length ?? 0 > 0) {
       return (
         <>
@@ -117,7 +114,7 @@ function Home({ navigation }: { navigation: any }): React.ReactElement {
                   >
                     <ExcerciseCard
                       name={exercise.name}
-                      count={exercise.duration}
+                      duration={exercise.duration}
                       reps={exercise.totalReps}
                       img={altImg}
                     />
@@ -196,13 +193,16 @@ function Home({ navigation }: { navigation: any }): React.ReactElement {
         </View>
       </View>
       <View style={tw`absolute bottom-0 flex justify-center items-center w-full py-4`}>
-        <Button 
-          radius={'xl'}
-          color="#55bfa9"
-          disabled={!isTimeSelected || valueGoal === null}
-          onPress={() => handleWorkout()}
-        >
-          Generate Workout
+        <Button
+            onPress={() => handleWorkout()}
+            loading={isWorkoutLoading}
+            mode='contained'
+            buttonColor='#55bfa9'
+            textColor='white'
+            style={tw`mt-4`}
+            disabled={!isTimeSelected || valueGoal.length === 0}
+            >
+              Generate Workout
         </Button>
       </View>
     </View>

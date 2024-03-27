@@ -4,7 +4,7 @@ import tw from 'twrnc';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import SetCard from '../components/setCard';
 import MidTextSeparator from '../components/midTextSeparator';
-import { Exercise, testSets } from '../utils/data';
+import { Exercise } from '../utils/data';
 import CustomVideoPlayer from '../components/customVideoPlayer';
 
 type StackParamList = {

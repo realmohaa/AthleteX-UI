@@ -20,6 +20,7 @@ export const header = ({ username }: headerProps) => {
     const logout = async () => {
         // Clear user data from storage
         await removeValue('user');
+        await removeValue('user-workout');
         // Update isSignedIn state
         setIsSignedIn(false);
         // Navigate to login screen
