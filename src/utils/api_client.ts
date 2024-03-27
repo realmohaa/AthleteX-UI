@@ -1,8 +1,9 @@
 import axios, { AxiosInstance } from 'axios';
 import { API_HEADERS, API_TIMEOUT, API_URL } from './consts';
-
+import { logger } from "react-native-logs";
 class ApiClient {
   private static instance: ApiClient;
+  private log = logger.createLogger();
 
   private axiosInstance: AxiosInstance = axios.create({
     baseURL: API_URL,
@@ -33,9 +34,7 @@ public async get(url: string, config?: any) {
         return await this.axiosInstance.get(url, config);
     }
     catch (error) {
-        // Handle error
-        console.error(error);
-        throw error;
+        throw this.log.error(error);
     }
 }
 
@@ -45,9 +44,7 @@ public async post(url: string, data?: any, config?: any) {
         return await this.axiosInstance.post(url, data, config);
     }
     catch (error) {
-        // Handle error
-        console.error(error);
-        throw error;
+        throw this.log.error(error);
     }
 }
 
@@ -57,9 +54,7 @@ public async put(url: string, data?: any, config?: any) {
         return await this.axiosInstance.put(url, data, config);
     }
     catch (error) {
-        // Handle error
-        console.error(error);
-        throw error;
+        throw this.log.error(error);
     }
 }
 
@@ -69,9 +64,7 @@ public async delete(url: string, config?: any) {
         return await this.axiosInstance.delete(url, config);
     }
     catch (error) {
-        // Handle error
-        console.error(error);
-        throw error;
+        throw this.log.error(error);
     }
 }
 
@@ -81,9 +74,7 @@ public async patch(url: string, data?: any, config?: any) {
         return await this.axiosInstance.patch(url, data, config);
     }
     catch (error) {
-        // Handle error
-        console.error(error);
-        throw error;
+        throw this.log.error(error);
     }
 }
 
