@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './src/screens/auth/Login';
@@ -13,6 +13,8 @@ import { Image, View } from 'react-native';
 import { AuthContext } from './src/utils/util';
 import {  MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
 import Toast, { BaseToast, BaseToastProps, ErrorToast } from 'react-native-toast-message';
+import ApiClient from './src/utils/api_client';
+import { retrieve } from './src/utils/token_storage';
 
 const toastConfig = {
   success: (props: React.JSX.IntrinsicAttributes & BaseToastProps) => (
@@ -136,6 +138,34 @@ export default function App() {
       myOwnColor: '#FFFFFF',
     },
   };
+
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const apiClient = ApiClient.getInstance();
+
+        const token = await retrieve("accessToken");
+        console.log(token);
+        const response = await apiClient.get('/api/v1/auth/me',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.status === 200) {
+          setIsSignedIn(true);
+        } else {
+          setIsSignedIn(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    checkAuthStatus();
+  }, []);
 
   return (
     <AuthContext.Provider value={{ isSignedIn, setIsSignedIn }}>

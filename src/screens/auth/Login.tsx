@@ -11,6 +11,8 @@ import wlogo from "../../assets/images/logowhite.png";
 import { storeData, AuthContext } from "../../utils/util";
 import CustomInput from "../../components/customInput";
 import Toast from "react-native-toast-message";
+import { setItem } from "expo-secure-store";
+import { store } from "../../utils/token_storage";
 
 function Login({ navigation }: { navigation: any }): React.JSX.Element {
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
@@ -34,6 +36,10 @@ const handleLogin = async (navigation: any) => {
     await storeData(response.data, "user");
 
     const accessToken = response.data.data.user.tokens.accessToken;
+
+    await store("accessToken",accessToken);
+    await store("refreshToken",response.data.data.user.tokens.refreshToken);
+
     const authHeaders = { Authorization: `Bearer ${accessToken}` };
 
     try {

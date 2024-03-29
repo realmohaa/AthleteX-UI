@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { API_HEADERS, API_TIMEOUT, API_URL } from './consts';
 import { logger } from "react-native-logs";
+import { retrieve, store } from './token_storage';
 class ApiClient {
   private static instance: ApiClient;
   private log = logger.createLogger();
@@ -8,12 +9,39 @@ class ApiClient {
   private axiosInstance: AxiosInstance = axios.create({
     baseURL: API_URL,
     headers: API_HEADERS,
-    timeout: API_TIMEOUT, // 10 seconds
+    timeout: API_TIMEOUT,
   });
-
-  
   private constructor() {
     // Private constructor to prevent instantiation
+
+    this.axiosInstance.interceptors.response.use(
+        (response) => {
+          // Do something with the response data
+          return response;
+        },
+        async (error) => {
+          // Check if it's a 401 error
+          if (error.response.status === 401) {
+            // Refresh the token
+            const refreshToken = await retrieve("refreshToken");
+            const refreshResponse = await this.axiosInstance.post('/api/v1/auth/refresh', { refreshToken });
+      
+            if (refreshResponse.status === 200) {
+              // Store the new tokens
+              await store("accessToken", refreshResponse.data.data.tokens.accessToken);
+              await store("refreshToken", refreshResponse.data.data.tokens.refreshToken);
+      
+              // Update the Authorization header
+              error.config.headers['Authorization'] = `Bearer ${refreshResponse.data.data.tokens.accessToken}`;
+      
+              // Retry the original request
+              return this.axiosInstance(error.config);
+            }
+          }
+      
+          return Promise.reject(error);
+        }
+      );
   }
 
   public static getInstance(): ApiClient {
@@ -81,6 +109,7 @@ public async patch(url: string, data?: any, config?: any) {
 public async options(url: string, config?: any) {
     return this.axiosInstance.options(url, config);
 }
+
 
 }
 
